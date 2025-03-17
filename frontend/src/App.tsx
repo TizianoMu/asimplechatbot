@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
 import ChatMessage from './ChatMessage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShip } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+library.add(faShip);
 
 interface Message {
   text: string;
@@ -31,7 +35,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: inputText }),
+        body: JSON.stringify({ query: inputText }),
       });
 
       if (!response.ok) {
@@ -42,7 +46,7 @@ function App() {
 
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: `AI: ${data.response}`, isUser: false },
+        { text: `ChatBoat: ${data.response}`, isUser: false },
       ]);
     } catch (error) {
       console.error('Errore durante la chiamata API:', error);
@@ -58,7 +62,7 @@ function App() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4">AI Chatbot</h1>
+        <h1 className="text-center text-2xl font-bold mb-4">ChatBoat <FontAwesomeIcon icon={faShip} /></h1>
         <div className="mb-4">
           {messages.map((message, index) => (
             <ChatMessage
