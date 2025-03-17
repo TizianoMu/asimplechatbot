@@ -19,14 +19,21 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isUser }) => {
             {!isUser && (
                 <>
                     <button
-                        className="block text-white bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                        onClick={() => setIsModalOpen(true)}
+                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded "
+                        onClick={() => setIsModalOpen(true)} //GET /documents
                     >
-                        Generico
+                        Verifica le fonti
                     </button>
                     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                        <h2 className="text-lg font-bold mb-2">Modal Title</h2>
-                        <p>Modal content goes here.</p>
+                        <h2 className="text-lg font-bold mb-2">Documenti</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Contenuto</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </Modal>
                 </>
             )}
