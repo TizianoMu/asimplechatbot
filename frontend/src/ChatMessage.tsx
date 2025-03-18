@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
+import ReactMarkdown from 'react-markdown';
 
 interface ChatMessageProps {
     message: string;
     isUser: boolean;
+    setIsSending: React.Dispatch<React.SetStateAction<boolean>>; //Per riabilitare l'input una volta finito di scrivere
 }
 
 interface Document {
@@ -11,10 +13,43 @@ interface Document {
     content: string;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ message, isUser }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [documents, setDocuments] = useState<Document[]>([]);
+const ChatMessage: React.FC<ChatMessageProps> = ({ message, isUser, setIsSending }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false); // Stato per gestire l'apertura/chiusura del modal dei documenti
+    const [documents, setDocuments] = useState<Document[]>([]); // Stato per memorizzare i documenti recuperati dall'API
+    const [typedMessage, setTypedMessage] = useState(''); // Stato per memorizzare il messaggio digitato progressivamente
+    const [currentIndex, setCurrentIndex] = useState(0); // tiene traccia dell'indice del carattere corrente nel messaggio (usato con typedMessage)
 
+    // Effetto per simulare la digitazione del messaggio
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+
+        // Se il messaggio non è dell'utente e ci sono ancora caratteri da digitare
+        if (!isUser && currentIndex < message.length) {
+            timeoutId = setTimeout(() => {
+                // Aggiunge il carattere corrente al messaggio digitato
+                setTypedMessage(prev => prev + message[currentIndex]);
+                // Incrementa l'indice del carattere corrente
+                setCurrentIndex(prev => prev + 1);
+            }, 50);
+        }
+        
+        return () => clearTimeout(timeoutId);
+    }, [currentIndex, message, isUser]);
+
+    // Effetto per resettare lo stato della digitazione quando il messaggio cambia
+    useEffect(() => {
+        if (!isUser && message.length > 0) {
+            // Resetta l'indice del carattere corrente
+            setCurrentIndex(0);
+            setTypedMessage('');
+            setIsSending(false);
+        } else if (isUser) {
+            // Se il messaggio è dell'utente, mostra il messaggio completo immediatamente
+            setTypedMessage(message);
+        }
+    }, [message, isUser]);
+
+    // Funzione per recuperare i documenti
     const fetchDocuments = async () => {
         try {
             const response = await fetch('/documents');
@@ -28,6 +63,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isUser }) => {
         }
     };
 
+    // Funzione per aprire il modal dei documenti
     const handleOpenModal = async () => {
         await fetchDocuments();
         setIsModalOpen(true);
@@ -35,9 +71,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isUser }) => {
 
     return (
         <div
-            className={`mt-4 p-2 border rounded flex justify-between items-center ${isUser ? 'bg-blue-100' : 'bg-gray-100'}`}
+            className={`w-[60%] mb-4 p-2 border rounded flex justify-between items-center ${isUser ? 'bg-blue-100 float-right' : 'bg-gray-100 float-left'}`}
         >
-            <div>{message}</div>
+            <div>{typedMessage}</div>
             {!isUser && (
                 <>
                     <button
@@ -60,7 +96,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isUser }) => {
                                     {documents.map((doc, index) => (
                                         <tr key={index}>
                                             <td className="border p-2">{doc.title}</td>
-                                            <td className="border p-2">{doc.content}</td>
+                                            <td className="border p-2"><ReactMarkdown>{doc.content}</ReactMarkdown></td>
                                         </tr>
                                     ))}
                                 </tbody>

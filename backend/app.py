@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import asyncio
 from flask_cors import CORS
 from flask_caching import Cache
 from documents import documents
@@ -9,33 +10,35 @@ app.config["SECRET_KEY"] = "any random string"
 app.config["CACHE_TYPE"] = "SimpleCache"
 app.config["CACHE_DEFAULT_TIMEOUT"] = 300
 cache = Cache(app)
-cache.set("questions", {
-
-})
+cache.set("questions", {})
 CORS(app)
 
-def extract_answer(query):
-    answer = 'Non so come aiutarti'
-    if query in questions_answers_dict.keys():
+async def extract_answer(query):
+    answer = "Non so come aiutarti."
+    await asyncio.sleep(2)
+    questions_dict = cache.get("questions")
+    print(questions_dict)
+    if questions_dict and isinstance(questions_dict, dict) and query in questions_dict:
+        answer = questions_dict[query]
+    elif query in questions_answers_dict:
         answer = questions_answers_dict[query]
-    questions = cache.get('questions')
-    questions[query] = answer
-    cache.set('questions',questions)
+        if questions_dict is None:
+            questions_dict = {}
+        questions_dict[query] = answer
+        await asyncio.sleep(2)
+        cache.set("questions",questions_dict)
     return answer
 
-@app.route('/generate', methods=['POST'])
+@app.route("/generate", methods=["POST"])
 def generate():
-    response = 'Metodo non consentito'
+    response = "Metodo non consentito"
     if request.method == "POST":
         data = request.get_json()
-        query = data['query']
-
-        questions_dict = cache.get("questions")
-        #Viene controllato che la risposta sia già in cache
-        response = questions_dict[query] if query in questions_dict.keys() else extract_answer(query)
-        return jsonify({'response': response})
+        query = data["query"]
+        response = asyncio.run(extract_answer(query))
+        return jsonify({"response": response,"cache":cache.get("questions")})
     else:
-        return jsonify({'response': response})
+        return jsonify({"response": response})
 
 @app.route('/documents', methods=['GET'])
 def get_documents():

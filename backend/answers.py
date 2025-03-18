@@ -27,7 +27,7 @@ questions_answers_dict = {
     "Ciao": "Ciao! 😊",
     "Come va?": "Tutto bene, grazie! E tu?",
     "Che fai?": "Sto qui a chiacchierare con te! 😊",
-    "Come ti chiami?": "Sono ChatBoat, un esperto di barche!",
+    "Come ti chiami?": "Sono ChatBoat, un assistente virtuale esperto di imbarcazioni!",
     "Quanti anni hai?": "Non ho un'età, ma sono sempre aggiornato!",
     "Che ore sono?": "Non posso vedere l'orario, ma puoi controllarlo sul tuo dispositivo! 😉",
     "Raccontami una barzelletta": "Certo! Perché il mare è sempre calmo? Perché sa che non deve agitarsi! 🌊😂",
