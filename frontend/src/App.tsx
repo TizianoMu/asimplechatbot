@@ -90,7 +90,7 @@ function App() {
         <div className="flex w-full mb-4">
           <textarea
             className="flex-grow h-14 p-2 border rounded mr-2"
-            placeholder="Chiedi al Chatbot"
+            placeholder="Chiedi a ChatBoat"
             value={inputText}
             onChange={handleInputChange}
           />
