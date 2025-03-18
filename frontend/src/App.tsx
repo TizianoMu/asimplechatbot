@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 import ChatMessage from './ChatMessage';
+import SeaBackground from './SeaBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShip, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faShip, faAnchor } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-library.add(faShip,faSpinner);
+library.add(faShip,faAnchor);
 
 // Interfaccia per i messaggi della chat
 interface Message {
@@ -73,7 +74,9 @@ function App() {
   };
 
   return (
-    <div className="w-100 flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="app-container">
+      <SeaBackground />
+      <div className="relative z-10 w-100 flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-opacity-50">
       <div className="bg-white p-8 rounded shadow-md w-[60vw]">
         <h1 className="text-center text-2xl font-bold mb-4">ChatBoat <FontAwesomeIcon icon={faShip} /></h1>
         <div className="mb-4">
@@ -99,10 +102,11 @@ function App() {
             onClick={handleSend}
             disabled={isSending}
           >
-            Invia {isSending && <FontAwesomeIcon icon={faSpinner} spin />}
+            Invia {isSending && <FontAwesomeIcon icon={faAnchor} fade />}
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

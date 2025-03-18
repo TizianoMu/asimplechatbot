@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+.sea {
+  position: fixed;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.sea svg {
+  position: absolute;
+  width: 100%;
+  height: 34%;
+  bottom: 99%;
+  left: 0%;
+}
+
+.water-fill {
+  -webkit-animation: wave 5s infinite linear;
+   animation: wave 5s infinite linear;
+   height: 100%;
+}
+@keyframes wave {
+  0% {
+    x: -750px;
+  }
+  100% {
+    x: 0;
+  }
+}
+@-webkit-keyframes wave {
+  0% {
+    x: -750px;
+  }
+  100% {
+    x: 0;
+  }
+}
