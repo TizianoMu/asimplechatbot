@@ -57,35 +57,12 @@ The application consists of a React-based chat interface that communicates with 
     -      Orchestrates the frontend and backend containers.
     -      Sets up networking between the containers.
     -      Mounts local directories as volumes for development.
-
-## Docker Configuration
-
--   **`docker-compose.yaml`:**
-    -      Defines two services: `flask` and `react`.
-    -      Builds the images from the `backend/` and `frontend/` directories, respectively.
-    -      Maps ports 5000 and 3000 to the host.
-    -      Sets up volume mounts for development.
-    -   Sets the environment variable `REACT_APP_API_URL` for the react container.
-    -   Sets the dependency of the react container on the flask container.
--   **`frontend/Dockerfile`:**
-    -      Uses the `node:18-alpine` base image.
-    -      Installs Node.js dependencies.
-    -      Copies the application code.
-    -      Exposes port 3000.
-    -      Starts the React development server.
--   **`backend/Dockerfile`:**
-    -   Uses the `python:3.10-alpine` base image.
-    -   Sets the working directory to `/app`.
-    -   Copies and installs Python dependencies from `requirements.txt`.
-    -   Copies the application code.
-    -   Starts the Flask application.
-
 ## Usage
 
 1.  Open your web browser and navigate to `http://localhost:3000`.
-2.  Type your message in the input field and click "Send".
+2.  Type your message in the input field and click "Invia".
 3.  The chatbot's response will be displayed in the chat interface.
-4.  Click the "Documents" button to view related documents.
+4.  Click the "Documenti" button to view related documents.
 
 ## Development
 
