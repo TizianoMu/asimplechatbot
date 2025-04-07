@@ -1,6 +1,6 @@
 # ChatBoat Application
 
-This project is a simple simulation chat application built with React for the frontend and Flask for the backend. It allows users to interact with a chatbot and view related documents.
+This project is a simple simulation of a chat application built with React for the frontend and Flask for the backend. It allows users to interact with a chatbot and view related documents.
 
 ## Project Structure
 
