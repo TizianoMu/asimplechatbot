@@ -79,7 +79,7 @@ function App() {
       <div className="relative z-10 w-100 flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-opacity-50">
       <div className="bg-white p-8 rounded shadow-md w-[60vw]">
         <h1 className="text-center text-2xl font-bold mb-4">ChatBoat <FontAwesomeIcon icon={faShip} /></h1>
-        <div className="mb-4">
+          <div className="mb-4 max-h-[400px] overflow-auto">
           {/* Mappa l'array dei messaggi e renderizza i componenti ChatMessage */}
           {messages.map((message, index) => (
             <ChatMessage
@@ -90,7 +90,7 @@ function App() {
             />
           ))}
         </div>
-        <div className="flex w-full mb-4">
+        <div className="flex w-full mb-4 position-fixed">
           <textarea
             className="flex-grow h-14 p-2 border rounded mr-2"
             placeholder="Chiedi a ChatBoat"
