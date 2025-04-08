@@ -1,6 +1,6 @@
 # ChatBoat Application
 
-This project is a simple simulation of a chat application built with React for the frontend and Flask for the backend. It allows users to interact with a chatbot and view related documents.
+This project is a simple chat application built with React for the frontend and Flask for the backend. It allows users to interact with a chatbot and view related documents. The chatbot uses Google Gemini API.
 
 ## Project Structure
 
